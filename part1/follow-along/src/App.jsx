@@ -1,3 +1,5 @@
+// Time for Component state, event handlers
+// https://fullstackopen.com/en/part1/component_state_event_handlers 
 const Footer = () => {
   return (
     <div>
@@ -7,10 +9,13 @@ const Footer = () => {
 }
 
 const Hello = (props) => {
-  console.log(">>", props)
+  const name = props.name
+  const age = props.age
+  const bornYear = () => new Date().getFullYear() - age
   return (
     <div>
-      <p>Hello {props.name}! You are {props.age} years old.</p>
+      <p>Hello {name}! You are {age} years old.</p>
+      <p>So you were probably born in {bornYear()}</p>
     </div>
   )
 }
@@ -24,6 +29,10 @@ const App = () => {
 
   return (
     <div>
+      <h1>Greetings!</h1>
+      <Hello name={friends[0].name} age={friends[0].age} />
+      <Hello name={friends[1].name} age={friends[1].age} />
+      <br />
       <p>{friends[0].name} {friends[0].age}</p>
       <p>{friends[1].name} {friends[1].age}</p>
       <p>{otherFriends}</p>
