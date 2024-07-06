@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <div>
-    <button type="button" onClick={() => console.log("Clicked!")}>plus</button>
+    <button onClick={() => setCounter(counter + 1)}>plus</button>
     </div>
   )
 }
