@@ -7,21 +7,29 @@ const App = () => {
   // handling of a more complex state
   const [left, setLeft] = useState(0)
   const [right, setRight] = useState(0)
+  const [total, setTotal] = useState(0)
   const [allClicks, setAll] = useState([])
 
   const setClicksToZero = () => {
     setLeft(0)
     setRight(0)
+    setTotal(0)
     setAll([])
   }
 
   const handleLeftClick = () => {
-    setLeft(left + 1)
+    const updatedLeft = left + 1
+    setLeft(updatedLeft)
+    console.log(">> left before:", left)
+    setTotal(updatedLeft + right)
+    console.log(">> left after:", left)
     setAll(allClicks.concat("L"))
   }
 
   const handleRightClick = () => {
-    setRight(right + 1)
+    const updatedRight = right + 1
+    setRight(updatedRight)
+    setTotal(left + updatedRight)
     setAll(allClicks.concat("R"))
   }
 
@@ -33,9 +41,8 @@ const App = () => {
       {right}
       <br />
       <button onClick={setClicksToZero}>zero</button>
-      <br />
-      <br />
       <p>{allClicks.join(" ")}</p>
+      <p>total: {total}</p>
     </div>
   );
 };
