@@ -6,15 +6,11 @@ import { useState } from 'react'
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-  const handleClick = () => {
-    console.log("Clicked!")
-  }
-
   console.log("rendering...", counter)
 
   return (
     <div>
-    <button type="button" onClick={handleClick}>plus</button>
+    <button type="button" onClick={() => console.log("Clicked!")}>plus</button>
     </div>
   )
 }
