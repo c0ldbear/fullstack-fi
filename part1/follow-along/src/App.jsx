@@ -45,9 +45,8 @@ const App = () => {
   };
 
   const hello = (who) => {
-    const handler = () => console.log("Hello", who)
-    return handler
-  }
+    return () => console.log("Hello", who);
+  };
 
   return (
     <div>
