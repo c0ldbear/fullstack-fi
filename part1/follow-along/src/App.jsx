@@ -5,36 +5,29 @@ import { useState } from "react";
 
 const App = () => {
   // handling of a more complex state
-  const [clicks, setClicks] = useState({
-    left: 0,
-    right: 0,
-  });
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
 
-  const handleLeftClick = () => setClicks({ ...clicks, left: clicks.left + 1 });
 
-  const handleRightClick = () => {
-    const newClicks = {
-      ...clicks,
-      right: clicks.right + 1,
-    };
-    setClicks(newClicks); 
-  };
-
-  // in react, it is forbidden to mutate the state directly!
-  // Forbidden:
-  const handleLeftClickForbidden = () => {
-    clicks.left++
-    setClicks(clicks)
+  const setClicksToZero = () => {
+    setLeft(0)
+    setRight(0)
   }
 
-  const setClicksToZero = () => setClicks({left: 0, right: 0})
+  const handleLeftClick = () => {
+    setLeft(left + 1)
+  }
+
+  const handleRightClick = () => {
+    setRight(right + 1)
+  }
 
   return (
     <div>
-      {clicks.left}
-      <button onClick={handleLeftClickForbidden}>left</button>
+      {left}
+      <button onClick={handleLeftClick}>left</button>
       <button onClick={handleRightClick}>right</button>
-      {clicks.right}
+      {right}
       <br />
       <button onClick={setClicksToZero}>zero</button>
     </div>
