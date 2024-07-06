@@ -6,58 +6,52 @@ import { useState } from "react";
 // Conditional rendering! :D
 const History = (props) => {
   if (props.allClicks.length === 0) {
-    return (
-      <div>
-        the app is used by pressing the buttons
-      </div>
-    )
+    return <div>the app is used by pressing the buttons</div>;
   }
 
-  return (
-    <div>
-      button press history: {props.allClicks.join(" ")}
-    </div>
-  )
-}
+  return <div>button press history: {props.allClicks.join(" ")}</div>;
+};
+
+const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>;
 
 const App = () => {
   // handling of a more complex state
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  const [total, setTotal] = useState(0)
-  const [allClicks, setAll] = useState([])
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [allClicks, setAll] = useState([]);
 
   const setClicksToZero = () => {
-    setLeft(0)
-    setRight(0)
-    setTotal(0)
-    setAll([])
-  }
+    setLeft(0);
+    setRight(0);
+    setTotal(0);
+    setAll([]);
+  };
 
   const handleLeftClick = () => {
-    const updatedLeft = left + 1
-    setLeft(updatedLeft)
-    console.log(">> left before:", left)
-    setTotal(updatedLeft + right)
-    console.log(">> left after:", left)
-    setAll(allClicks.concat("L"))
-  }
+    const updatedLeft = left + 1;
+    setLeft(updatedLeft);
+    console.log(">> left before:", left);
+    setTotal(updatedLeft + right);
+    console.log(">> left after:", left);
+    setAll(allClicks.concat("L"));
+  };
 
   const handleRightClick = () => {
-    const updatedRight = right + 1
-    setRight(updatedRight)
-    setTotal(left + updatedRight)
-    setAll(allClicks.concat("R"))
-  }
+    const updatedRight = right + 1;
+    setRight(updatedRight);
+    setTotal(left + updatedRight);
+    setAll(allClicks.concat("R"));
+  };
 
   return (
     <div>
       {left}
-      <button onClick={handleLeftClick}>left</button>
-      <button onClick={handleRightClick}>right</button>
+      <Button handleClick={handleLeftClick} text="Left" />
+      <Button handleClick={handleRightClick} text="Right" />
       {right}
       <br />
-      <button onClick={setClicksToZero}>zero</button>
+      <Button handleClick={setClicksToZero} text="Zero" />
       <History allClicks={allClicks} />
     </div>
   );
