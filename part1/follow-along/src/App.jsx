@@ -18,22 +18,11 @@ const Hello = ({name, age}) => {
   )
 }
 
-const App = () => {
-  const friends = [
-    {name: "Peter", age: 4},
-    {name: "Maya", age: 10}
-  ]
-  const otherFriends = ["Pelle", "Maria"]
-
+const App = (props) => {
+  const {counter} = props
   return (
     <div>
-      <h1>Greetings!</h1>
-      <Hello name={friends[0].name} age={friends[0].age} />
-      <Hello name={friends[1].name} age={friends[1].age} />
-      <br />
-      <p>{friends[0].name} {friends[0].age}</p>
-      <p>{friends[1].name} {friends[1].age}</p>
-      <p>{otherFriends}</p>
+      {counter}
     </div>
   )
 }
