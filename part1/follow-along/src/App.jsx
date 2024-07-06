@@ -44,8 +44,8 @@ const App = () => {
     setAll(allClicks.concat("R"));
   };
 
-  const hello = () => {
-    const handler = () => console.log("Hello world!")
+  const hello = (who) => {
+    const handler = () => console.log("Hello", who)
     return handler
   }
 
@@ -59,7 +59,8 @@ const App = () => {
       <Button handleClick={setClicksToZero} text="Zero" />
       <History allClicks={allClicks} />
       <br />
-      <Button handleClick={hello()} text="Say hello!" />
+      <Button handleClick={hello("world")} text="Say world!" />
+      <Button handleClick={hello("react")} text="Say react!" />
     </div>
   );
 };
