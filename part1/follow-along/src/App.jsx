@@ -12,6 +12,8 @@ const History = (props) => {
   return <div>button press history: {props.allClicks.join(" ")}</div>;
 };
 
+const Display = (props) => <div>{props.value}</div>;
+
 const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>;
 
 const App = () => {
@@ -74,9 +76,6 @@ const App = () => {
     console.log("setting value now to:", newValue);
     setValue(newValue);
   };
-
-  // DO NOT define components inside another component
-  const Display = (props) => <div>{props.value}</div>;
 
   return (
     <div>
