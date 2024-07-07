@@ -20,7 +20,7 @@ const App = () => {
   const [right, setRight] = useState(0);
   const [total, setTotal] = useState(0);
   const [allClicks, setAll] = useState([]);
-  const [value, setValue] = useState(10)
+  const [value, setValue] = useState(10);
 
   const setClicksToZero = () => {
     setLeft(0);
@@ -48,32 +48,35 @@ const App = () => {
   const hello = (who) => () => console.log("Hello", who);
   const helloAgain = (who) => {
     const handler = () => {
-      console.log("hello again,", who)
-    }
-    return handler
-  }
+      console.log("hello again,", who);
+    };
+    return handler;
+  };
   const helloOnceMore = (who) => {
     return () => {
-      console.log("Hello! Back again,", who, "eh?")
-    }
-  }
+      console.log("Hello! Back again,", who, "eh?");
+    };
+  };
 
   const setToValue = (newValue) => () => {
-    console.log("value now:", newValue)
-    setValue(newValue)
-  }
+    console.log("value now:", newValue);
+    setValue(newValue);
+  };
 
   const setToAnotherValue = (newValue) => {
     return () => {
-      console.log("value now then:", newValue)
-      setValue(newValue)
-    }
-  }
+      console.log("value now then:", newValue);
+      setValue(newValue);
+    };
+  };
 
   const setToValueNow = (newValue) => {
-    console.log("setting value now to:", newValue)
-    setValue(newValue)
-  }
+    console.log("setting value now to:", newValue);
+    setValue(newValue);
+  };
+
+  // DO NOT define components inside another component
+  const Display = (props) => <div>{props.value}</div>;
 
   return (
     <div>
@@ -92,11 +95,13 @@ const App = () => {
       <br />
       <Button handleClick={setToValue(1000)} text="Thousand" />
       <Button handleClick={setToValue(0)} text="reset" />
-      <Button handleClick={setToValue(value+1)} text="increment" />
-      <Button handleClick={setToAnotherValue(value+2)} text="increment by 2" />
+      <Button handleClick={setToValue(value + 1)} text="increment" />
+      <Button handleClick={setToAnotherValue(value + 2)} text="increment by 2" />
       <br />
       <Button handleClick={() => setToValueNow(2)} text="two" />
-      <Button handleClick={() => setToValueNow(value+10)} text="ncrement by 10" />
+      <Button handleClick={() => setToValueNow(value + 10)} text="ncrement by 10" />
+      <br />
+      <Display value={10} />
     </div>
   );
 };
