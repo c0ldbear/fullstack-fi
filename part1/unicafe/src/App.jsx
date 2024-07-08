@@ -4,8 +4,31 @@ const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
 };
 
-const DisplayFeedback = ({text, value}) => {
-  return <div>{text} {value}</div>
+const DisplayFeedback = ({ text, value }) => {
+  return (
+    <div>
+      {text} {value}
+    </div>
+  );
+};
+
+
+const DisplayAverage = ({goodValue, badValue, neutralValue}) => {
+  const average = (goodValue - badValue + 0*neutralValue) / (goodValue + badValue + neutralValue)
+  return (
+    <div>
+      average {average}
+    </div>
+  )
+}
+
+const PositiveRate = ({goodValue, badValue, neutralValue}) => {
+  const positivePercentage = goodValue / (goodValue +badValue + neutralValue) * 100
+  return (
+    <div>
+      positive {positivePercentage}%
+    </div>
+  )
 }
 
 function App() {
@@ -13,37 +36,35 @@ function App() {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const temp = (text) => () => {
-    console.log(text)
-  }
-
   const setGoodFeedback = () => {
-    console.log("good!")
-    setGood(good + 1)
-  }
+    console.log("good!");
+    setGood(good + 1);
+  };
 
   const setNeutralFeedback = () => {
-    console.log("neutral!")
-    setGood(neutral + 1)
-  }
+    console.log("neutral!");
+    setNeutral(neutral + 1);
+  };
 
   const setBadFeedback = () => {
-    console.log("bad!")
-    setGood(bad + 1)
-  }
+    console.log("bad!");
+    setBad(bad + 1);
+  };
 
   return (
     <>
       <h1>give feedback</h1>
-
       <Button text={"good"} onClick={setGoodFeedback} />
-      <button onClick={temp("neutral")}>neutral</button>
-      <button onClick={temp("bad")}>bad</button>
+      <Button text={"neutral"} onClick={setNeutralFeedback} />
+      <Button text={"bad"} onClick={setBadFeedback} />
 
       <h1>statistics</h1>
       <DisplayFeedback text="good" value={good} />
-      <div>neutral</div>
-      <div>bad</div>
+      <DisplayFeedback text="neutral" value={neutral} />
+      <DisplayFeedback text="bad" value={bad} />
+      <DisplayFeedback text="all" value={good+bad+neutral} />
+      <DisplayAverage goodValue={good} badValue={bad} neutralValue={neutral} />
+      <PositiveRate goodValue={good} badValue={bad} neutralValue={neutral} />
     </>
   );
 }
