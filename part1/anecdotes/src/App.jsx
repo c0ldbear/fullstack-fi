@@ -30,6 +30,7 @@ function App() {
     ],
   });
   const [selected, setSelected] = useState(0);
+  const [mostVoted, setMostVoted] = useState(0);
 
   const generateRandomAnecdote = () => {
     const randomAnecdoteIndex = Math.floor(Math.random() * anecdotes.data.length);
@@ -39,15 +40,31 @@ function App() {
   const setPointsToAnecdote = () => {
     const copy = { ...anecdotes };
     copy.data[selected].points += 1;
+    findMostPoints(anecdotes)
     setAnecdotes(copy);
   };
 
+  const findMostPoints = (anecdotes) => {
+    let tempPoints = 0 
+    let tempIndex = 0 
+    anecdotes.data.filter((item, index) => {
+      tempPoints = tempPoints > item.points ? tempPoints : item.points
+      tempIndex = tempPoints > item.points ? tempIndex : index
+    })
+    setMostVoted(tempIndex)
+  }
+
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div>{anecdotes.data[selected].text}</div>
       <div>has {anecdotes.data[selected].points} votes</div>
       <Button text={"vote"} onClick={setPointsToAnecdote} />
       <Button text={"next anecdote"} onClick={generateRandomAnecdote} />
+
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes.data[mostVoted].text}</div>
+      <div>has {anecdotes.data[mostVoted].points} votes</div>
     </>
   );
 }
