@@ -11,7 +11,13 @@ function App(props) {
 
   const addNote = (event) => {
     event.preventDefault();
-    console.log("button clicked", event.target);
+    const noteObject = {
+      content: newNote,
+      important: Math.random() < 0.5,
+      id: notes.length + 1,
+    };
+    setNotes(notes.concat(noteObject)); // concat produces a new copy with the added new noteObject instead of mutating the original array
+    // we shall never mutate state directly in React.
     setNewNote("");
   };
 
@@ -25,10 +31,6 @@ function App(props) {
     setNewNote("");
   };
 
-  const handleOnNoteBlur = (event) => {
-    setNewNote(defaultInputText);
-  };
-
   return (
     <div>
       <h1>Notes</h1>
@@ -38,12 +40,7 @@ function App(props) {
         ))}
       </ul>
       <form onSubmit={addNote}>
-        <input
-          value={newNote}
-          onChange={handleNoteChange}
-          onFocus={handleOnNoteFocus}
-          onBlur={handleOnNoteBlur}
-        />
+        <input value={newNote} onChange={handleNoteChange} onFocus={handleOnNoteFocus} />
         <button type="submit">save</button>
       </form>
     </div>
