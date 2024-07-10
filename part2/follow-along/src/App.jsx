@@ -8,6 +8,9 @@ function App(props) {
   const defaultInputText = "a new note ...";
   const [notes, setNotes] = useState(props.notes);
   const [newNote, setNewNote] = useState(defaultInputText);
+  const [showAll, setShowAll] = useState(true);
+
+  const notesToShow = showAll ? notes : notes.filter((note) => note.important === true);
 
   const addNote = (event) => {
     event.preventDefault();
@@ -31,11 +34,20 @@ function App(props) {
     setNewNote("");
   };
 
+  const handleShowAll = () => {
+    setShowAll(!showAll);
+  };
+
   return (
     <div>
       <h1>Notes</h1>
+      <div>
+        <button onClick={handleShowAll}>
+          show <b>{showAll ? "important" : "all"}</b>
+        </button>
+      </div>
       <ul>
-        {notes.map((note) => (
+        {notesToShow.map((note) => (
           <Note key={note.id} note={note} /> // NOTE (lol) that the 'key' attribute now must be defined for the Note components, and not for the li tags like before.
         ))}
       </ul>
