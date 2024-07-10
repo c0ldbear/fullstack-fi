@@ -1,5 +1,9 @@
-const Header = ({ name }) => {
-  return <h1>{name}</h1>;
+const Header = ({ text }) => {
+  return <h1>{text}</h1>;
+};
+
+const CourseTitle = ({ name }) => {
+  return <h2>{name}</h2>;
 };
 
 const Content = ({ parts }) => {
@@ -36,41 +40,66 @@ const SumOfExercises = ({ parts }) => {
 const Course = ({ course }) => {
   return (
     <>
-      <Header name={course.name} />
+      <CourseTitle name={course.name} />
       <Content parts={course.parts} />
     </>
   );
 };
 
 function App() {
-  const course = {
-    id: 1,
-    name: "Half Stack application development",
-    parts: [
-      {
-        name: "Fundamentals of React",
-        exercises: 10,
-        id: 1,
-      },
-      {
-        name: "Using props to pass data",
-        exercises: 7,
-        id: 2,
-      },
-      {
-        name: "State of a component",
-        exercises: 14,
-        id: 3,
-      },
-      {
-        name: "Redux",
-        exercises: 11,
-        id: 4,
-      },
-    ],
-  };
+  const courses = [
+    {
+      id: 1,
+      name: "Half Stack application development",
+      parts: [
+        {
+          name: "Fundamentals of React",
+          exercises: 10,
+          id: 1,
+        },
+        {
+          name: "Using props to pass data",
+          exercises: 7,
+          id: 2,
+        },
+        {
+          name: "State of a component",
+          exercises: 14,
+          id: 3,
+        },
+        {
+          name: "Redux",
+          exercises: 11,
+          id: 4,
+        },
+      ],
+    },
+    {
+      name: "Node.js",
+      id: 2,
+      parts: [
+        {
+          name: "Routing",
+          exercises: 3,
+          id: 1,
+        },
+        {
+          name: "Middlewares",
+          exercises: 7,
+          id: 2,
+        },
+      ],
+    },
+  ];
 
-  return <Course course={course} />;
+  return (
+    <div>
+      <Header text="Web development curriculum" />
+      {courses.map((course) => {
+        return <Course key={course.id} course={course} />;
+      })}
+    </div>
+  );
 }
 
 export default App;
