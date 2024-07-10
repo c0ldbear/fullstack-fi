@@ -1,9 +1,5 @@
 function Item({ name, isPacked }) {
-  if (isPacked) {
-    return <li className="item">{name} ✔</li>;
-  }
-
-  return <li className="item">{name}</li>;
+  return <li className="item">{isPacked ? name + " ✔" : name} </li>;
 }
 
 export default function PackingList() {
@@ -11,7 +7,7 @@ export default function PackingList() {
     <section>
       <h1>Sally Ride's Packing List</h1>
       <ul>
-        <Item isPacked={false} name="space suit" />
+        <Item isPacked={true} name="space suit" />
         <Item isPacked={true} name="helmet with a golden leaf" />
         <Item isPacked={false} name="photo of tam" />
       </ul>
