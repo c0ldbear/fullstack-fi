@@ -14,6 +14,8 @@ function App(props) {
   const importants = notes.map((note) => note.important);
   console.log(">> importants:", importants);
 
+  const antiPatternListElements = notes.map((note, index) => <li key={index}>{note.content}</li>);
+
   return (
     <div>
       <h1>Notes</h1>
@@ -21,6 +23,7 @@ function App(props) {
         {notes.map((note) => (
           <li key={note.id}>{note.content}</li>
         ))}
+        {antiPatternListElements}
       </ul>
     </div>
   );
