@@ -8,12 +8,23 @@ const App = () => {
     setNewName(event.target.value);
   };
 
+  const findDuplicatePerson = (newPerson) => {
+    return persons.find((person) => person.name.toLowerCase() === newPerson.name.toLowerCase())
+      ? true
+      : false;
+  };
+
   const addPerson = (event) => {
     event.preventDefault();
     const personObject = {
       name: newName,
     };
-    setPersons(persons.concat(personObject));
+
+    if (findDuplicatePerson(personObject)) {
+      alert(`${personObject.name} is already added to phonebook.`);
+    } else {
+      setPersons(persons.concat(personObject));
+    }
     setNewName("");
   };
 
