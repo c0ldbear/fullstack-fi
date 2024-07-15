@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -11,37 +12,6 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterValue, setFilterValue] = useState("");
-
-  const handlePhonebookNameChange = (event) => {
-    setNewName(event.target.value);
-  };
-
-  const handlePhonebookNumberChange = (event) => {
-    setNewNumber(event.target.value);
-  };
-
-  const findDuplicatePerson = (newPerson) => {
-    return persons.find((person) => person.name.toLowerCase() === newPerson.name.toLowerCase())
-      ? true
-      : false;
-  };
-
-  const addPerson = (event) => {
-    event.preventDefault();
-    const personObject = {
-      name: newName,
-      number: newNumber,
-      id: persons.length + 1,
-    };
-
-    if (findDuplicatePerson(personObject)) {
-      alert(`${personObject.name} is already added to phonebook.`);
-    } else {
-      setPersons(persons.concat(personObject));
-    }
-    setNewName("");
-    setNewNumber("");
-  };
 
   const isNameInPersons = (name) => {
     return name.toLowerCase().includes(filterValue);
@@ -57,17 +27,15 @@ const App = () => {
       <Filter filterValue={filterValue} setFilterValue={setFilterValue} />
 
       <h3>Add a new</h3>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handlePhonebookNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handlePhonebookNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm
+        persons={persons}
+        setPersons={setPersons}
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+      />
+
       <h2>Numbers</h2>
       {personsToShow.map((person) => {
         return (
