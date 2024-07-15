@@ -14,7 +14,7 @@ const App = () => {
   const [filterValue, setFilterValue] = useState("");
 
   const isNameInPersons = (name) => {
-    return name.toLowerCase().includes(filterValue);
+    return name.toLowerCase().includes(filterValue.toLowerCase());
   };
 
   const personsToShow = persons.filter((person) => {
