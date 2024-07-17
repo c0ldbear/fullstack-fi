@@ -25,6 +25,18 @@ function App() {
   useEffect(hook, []);
   console.log(">> render", notes.length, "notes");
 
+  const toggleImportanceOf = (id) => {
+    console.log(`>> importance of ${id} needs to be toggled`);
+    const url = `http://localhost:3001/notes/${id}`;
+    const note = notes.find((n) => n.id === id);
+    const changedNote = { ...note, important: !note.important };
+
+    axios.put(url, changedNote).then((response) => {
+      console.log(">>> importanceOf, response", response);
+      setNotes(notes.map((n) => (n.id !== id ? n : response.data)));
+    });
+  };
+
   const notesToShow = showAll ? notes : notes.filter((note) => note.important === true);
 
   const addNote = (event) => {
@@ -66,7 +78,8 @@ function App() {
       </div>
       <ul>
         {notesToShow.map((note) => (
-          <Note key={note.id} note={note} /> // NOTE (lol) that the 'key' attribute now must be defined for the Note components, and not for the li tags like before.
+          <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
+          // NOTE (lol) that the 'key' attribute now must be defined for the Note components, and not for the li tags like before.
         ))}
       </ul>
       <form onSubmit={addNote}>
