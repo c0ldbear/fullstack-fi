@@ -1,3 +1,5 @@
+import phonebookService from "../services/phonebook";
+
 const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNewNumber }) => {
   const handlePhonebookNameChange = (event) => {
     setNewName(event.target.value);
@@ -18,13 +20,15 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
+      // id: persons.length + 1, // let the server handle IDs!
     };
 
     if (findDuplicatePerson(personObject)) {
       alert(`${personObject.name} is already added to phonebook.`);
     } else {
-      setPersons(persons.concat(personObject));
+      phonebookService.create(personObject).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+      });
     }
     setNewName("");
     setNewNumber("");
