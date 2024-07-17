@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 import Note from "./components/Note";
+import Notification from "./components/Notification";
 import noteService from "./services/notes";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
   // such as find, filter, and map
   const defaultInputText = "a new note ...";
   const [notes, setNotes] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("some error happened...");
   const [newNote, setNewNote] = useState(defaultInputText);
   const [showAll, setShowAll] = useState(true);
 
@@ -37,8 +39,12 @@ function App() {
         setNotes(notes.map((n) => (n.id !== id ? n : returnedNote)));
       })
       .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server.`);
+        // alert(`the note '${note.content}' was already deleted from server.`);
+        setErrorMessage(`Note '${note.content}' was already removed from server`);
         console.log(">> error in toggleImportanceOf:", error);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
         setNotes(notes.filter((n) => n.id !== id));
       });
   };
@@ -79,6 +85,7 @@ function App() {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={handleShowAll}>
           show <b>{showAll ? "important" : "all"}</b>
