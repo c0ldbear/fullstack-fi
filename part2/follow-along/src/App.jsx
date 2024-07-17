@@ -15,9 +15,9 @@ function App() {
   const hook = () => {
     console.log(">> effect");
 
-    const eventHandler = (response) => {
+    const eventHandler = (initialNotes) => {
       console.log(">> promise fulfilled!");
-      setNotes(response.data);
+      setNotes(initialNotes);
     };
 
     noteService.getAll().then(eventHandler);
@@ -31,9 +31,8 @@ function App() {
     const note = notes.find((n) => n.id === id);
     const changedNote = { ...note, important: !note.important };
 
-    noteService.update(id, changedNote).then((response) => {
-      console.log(">>> importanceOf, response", response);
-      setNotes(notes.map((n) => (n.id !== id ? n : response.data)));
+    noteService.update(id, changedNote).then((returnedNote) => {
+      setNotes(notes.map((n) => (n.id !== id ? n : returnedNote)));
     });
   };
 
@@ -46,9 +45,9 @@ function App() {
       important: Math.random() < 0.5,
     };
 
-    noteService.create(noteObject).then((response) => {
-      console.log(">> response:", response);
-      setNotes(notes.concat(response.data)); // this updates the "UI"
+    noteService.create(noteObject).then((returnedNote) => {
+      console.log(">> returnedNote:", returnedNote);
+      setNotes(notes.concat(returnedNote)); // this updates the "UI"
       // concat produces a new copy with the added new noteObject
       // instead of mutating the original array we shall never
       // mutate state directly in React.

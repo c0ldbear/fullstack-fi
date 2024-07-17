@@ -16,14 +16,14 @@
       "important": true
     },
     {
-      "id": 5,
+      "id": "4",
       "content": "This is a new note",
       "important": true
     },
     {
       "id": "1bdb",
       "content": "Another new note",
-      "important": true
+      "important": false
     },
     {
       "id": "f604",
@@ -43,7 +43,7 @@
     {
       "id": "6680",
       "content": "Awesome?",
-      "important": false
+      "important": true
     }
   ]
 }
