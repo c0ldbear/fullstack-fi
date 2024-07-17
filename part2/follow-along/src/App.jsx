@@ -3,6 +3,7 @@ import axios from "axios";
 import "./App.css";
 import Note from "./components/Note";
 import Notification from "./components/Notification";
+import Footer from "./components/Footer";
 import noteService from "./services/notes";
 
 function App() {
@@ -103,6 +104,7 @@ function App() {
         <input value={newNote} onChange={handleNoteChange} onFocus={handleOnNoteFocus} />
         <button type="submit">save</button>
       </form>
+      <Footer />
     </div>
   );
 }
