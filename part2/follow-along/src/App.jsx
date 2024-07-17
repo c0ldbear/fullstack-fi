@@ -20,7 +20,6 @@ function App() {
       setNotes(response.data);
     };
 
-    // axios.get("http://localhost:3001/notes").then(eventHandler);
     noteService.getAll().then(eventHandler);
   };
 
@@ -36,11 +35,6 @@ function App() {
       console.log(">>> importanceOf, response", response);
       setNotes(notes.map((n) => (n.id !== id ? n : response.data)));
     });
-
-    // axios.put(url, changedNote).then((response) => {
-    //   console.log(">>> importanceOf, response", response);
-    //   setNotes(notes.map((n) => (n.id !== id ? n : response.data)));
-    // });
   };
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important === true);
@@ -55,16 +49,11 @@ function App() {
     noteService.create(noteObject).then((response) => {
       console.log(">> response:", response);
       setNotes(notes.concat(response.data)); // this updates the "UI"
+      // concat produces a new copy with the added new noteObject
+      // instead of mutating the original array we shall never
+      // mutate state directly in React.
       setNewNote("");
     });
-
-    // setNotes(notes.concat(noteObject)); // concat produces a new copy with the added new noteObject instead of mutating the original array
-    // we shall never mutate state directly in React.
-    // axios.post("http://localhost:3001/notes", noteObject).then((response) => {
-    //   console.log(">> response:", response);
-    //   setNotes(notes.concat(response.data)); // this updates the "UI"
-    //   setNewNote("");
-    // });
   };
 
   const handleNoteChange = (event) => {
@@ -92,7 +81,9 @@ function App() {
       <ul>
         {notesToShow.map((note) => (
           <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
-          // NOTE (lol) that the 'key' attribute now must be defined for the Note components, and not for the li tags like before.
+          // NOTE (lol) that the 'key' attribute now must be
+          // defined for the Note components, and not for the
+          // li tags like before.
         ))}
       </ul>
       <form onSubmit={addNote}>
