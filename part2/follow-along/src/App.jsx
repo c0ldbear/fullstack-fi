@@ -31,9 +31,16 @@ function App() {
     const note = notes.find((n) => n.id === id);
     const changedNote = { ...note, important: !note.important };
 
-    noteService.update(id, changedNote).then((returnedNote) => {
-      setNotes(notes.map((n) => (n.id !== id ? n : returnedNote)));
-    });
+    noteService
+      .update(id, changedNote)
+      .then((returnedNote) => {
+        setNotes(notes.map((n) => (n.id !== id ? n : returnedNote)));
+      })
+      .catch((error) => {
+        alert(`the note '${note.content}' was already deleted from server.`);
+        console.log(">> error in toggleImportanceOf:", error);
+        setNotes(notes.filter((n) => n.id !== id));
+      });
   };
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important === true);

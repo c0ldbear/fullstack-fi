@@ -17,8 +17,8 @@ const update = (id, newObject) => {
   return request.then((response) => response.data);
 };
 
-export default {
-  getAll: getAll,
-  create: create,
-  update: update,
-};
+export default { getAll, create, update };
+// here we are using a new feature in ES6 to create
+// the object. Here the keys and values are the same
+// so that's why we can skip the keys and just add
+// the variables. The keys are auto-generated.
