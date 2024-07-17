@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "./App.css";
 import Note from "./components/Note";
 
-function App(props) {
+function App() {
   // We will use functional programming operators now of the JS _array_,
   // such as find, filter, and map
   const defaultInputText = "a new note ...";
-  const [notes, setNotes] = useState(props.notes);
+  const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState(defaultInputText);
   const [showAll, setShowAll] = useState(true);
+
+  useEffect(() => {
+    console.log(">> effect");
+    axios.get("http://localhost:3001/notes").then((response) => {
+      console.log(">> promise fulfilled!");
+      setNotes(response.data);
+    });
+  }, []);
+  console.log(">> render", notes.length, "notes");
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important === true);
 
