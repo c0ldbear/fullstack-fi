@@ -10,9 +10,24 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
   };
 
   const findDuplicatePerson = (newPerson) => {
-    return persons.find((person) => person.name.toLowerCase() === newPerson.name.toLowerCase())
-      ? true
-      : false;
+    return persons.find((person) => person.name.toLowerCase() === newPerson.name.toLowerCase());
+  };
+
+  const updatePerson = (personObject) => {
+    const updatePerson = confirm(
+      `${personObject.name} is already added to phonebook, replace the old number with a new one?`
+    );
+
+    if (updatePerson) {
+      const foundPerson = findDuplicatePerson(personObject);
+      const updatedPerson = { ...foundPerson, number: personObject.number }; // we only want to update the number
+
+      phonebookService.update(foundPerson.id, updatedPerson).then((returnedPerson) => {
+        setPersons(
+          persons.map((person) => (person.id !== foundPerson.id ? person : returnedPerson))
+        );
+      });
+    }
   };
 
   const addPerson = (event) => {
@@ -20,11 +35,10 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
     const personObject = {
       name: newName,
       number: newNumber,
-      // id: persons.length + 1, // let the server handle IDs!
     };
 
     if (findDuplicatePerson(personObject)) {
-      alert(`${personObject.name} is already added to phonebook.`);
+      updatePerson(personObject);
     } else {
       phonebookService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
