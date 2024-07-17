@@ -32,11 +32,14 @@ function App() {
     const noteObject = {
       content: newNote,
       important: Math.random() < 0.5,
-      id: notes.length + 1,
     };
-    setNotes(notes.concat(noteObject)); // concat produces a new copy with the added new noteObject instead of mutating the original array
+    // setNotes(notes.concat(noteObject)); // concat produces a new copy with the added new noteObject instead of mutating the original array
     // we shall never mutate state directly in React.
-    setNewNote("");
+    axios.post("http://localhost:3001/notes", noteObject).then((response) => {
+      console.log(">> response:", response);
+      setNotes(notes.concat(response.data)); // this updates the "UI"
+      setNewNote("");
+    });
   };
 
   const handleNoteChange = (event) => {
