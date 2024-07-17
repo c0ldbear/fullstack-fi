@@ -11,13 +11,15 @@ function App() {
   const [newNote, setNewNote] = useState(defaultInputText);
   const [showAll, setShowAll] = useState(true);
 
-  useEffect(() => {
+  const hook = () => {
     console.log(">> effect");
     axios.get("http://localhost:3001/notes").then((response) => {
       console.log(">> promise fulfilled!");
       setNotes(response.data);
     });
-  }, []);
+  };
+
+  useEffect(hook, []);
   console.log(">> render", notes.length, "notes");
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important === true);
