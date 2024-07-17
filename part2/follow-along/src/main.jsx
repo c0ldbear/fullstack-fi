@@ -5,11 +5,10 @@ import "./index.css";
 
 import axios from "axios";
 
-const promise = axios.get("http://localhost:3001/notes");
-console.log(">> promise:", promise);
-promise.then((res) => {
+axios.get("http://localhost:3001/notes").then((res) => {
   console.log(">> response:", res);
-  console.log(">>> data:", res.data);
+  const notes = res.data;
+  console.log(">>> data (notes):", notes);
 });
 
 const promise2 = axios.get("http://localhost:3001/foobar");
