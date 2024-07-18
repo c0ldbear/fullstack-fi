@@ -11,10 +11,12 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationType, setNotificationType] = useState("");
 
   useEffect(() => {
     phonebookService.getAll().then((initialPersons) => {
       setNotificationMessage(null);
+      setNotificationType(null);
       setPersons(initialPersons);
     });
   }, []);
@@ -23,10 +25,12 @@ const App = () => {
     return name.toLowerCase().includes(filterValue.toLowerCase());
   };
 
-  const updateNotificationMessage = (message) => {
+  const updateNotificationMessage = (message, type) => {
     setNotificationMessage(message);
+    setNotificationType(type);
     setTimeout(() => {
       setNotificationMessage(null);
+      setNotificationType(null);
     }, 3000);
   };
 
@@ -37,7 +41,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      {notificationMessage && <Notification message={notificationMessage} />}
+      {notificationMessage && (
+        <Notification message={notificationMessage} type={notificationType} />
+      )}
       <Filter filterValue={filterValue} setFilterValue={setFilterValue} />
 
       <h3>Add a new</h3>

@@ -30,12 +30,20 @@ const PersonForm = ({
       const foundPerson = findDuplicatePerson(personObject);
       const updatedPerson = { ...foundPerson, number: personObject.number }; // we only want to update the number
 
-      phonebookService.update(foundPerson.id, updatedPerson).then((returnedPerson) => {
-        setPersons(
-          persons.map((person) => (person.id !== foundPerson.id ? person : returnedPerson))
-        );
-        updateNotificationMessage(`Updated ${returnedPerson.name}`);
-      });
+      phonebookService
+        .update(foundPerson.id, updatedPerson)
+        .then((returnedPerson) => {
+          setPersons(
+            persons.map((person) => (person.id !== foundPerson.id ? person : returnedPerson))
+          );
+          updateNotificationMessage(`Updated ${returnedPerson.name}`, "success");
+        })
+        .catch((error) => {
+          updateNotificationMessage(
+            `Information of ${updatedPerson.name} has already been removed from server`,
+            "error"
+          );
+        });
     }
   };
 
@@ -51,7 +59,7 @@ const PersonForm = ({
     } else {
       phonebookService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
-        updateNotificationMessage(`Added ${returnedPerson.name}`);
+        updateNotificationMessage(`Added ${returnedPerson.name}`, "success");
       });
     }
     setNewName("");
