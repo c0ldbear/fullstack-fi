@@ -10,13 +10,11 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterValue, setFilterValue] = useState("");
-  const [notificationMessage, setNotificationMessage] = useState("");
-  const [notificationType, setNotificationType] = useState("");
+  const [notification, setNotification] = useState({ message: null, type: null });
 
   useEffect(() => {
     phonebookService.getAll().then((initialPersons) => {
-      setNotificationMessage(null);
-      setNotificationType(null);
+      setNotification({ message: null, type: null });
       setPersons(initialPersons);
     });
   }, []);
@@ -26,11 +24,9 @@ const App = () => {
   };
 
   const updateNotificationMessage = (message, type) => {
-    setNotificationMessage(message);
-    setNotificationType(type);
+    setNotification({ message: message, type: type });
     setTimeout(() => {
-      setNotificationMessage(null);
-      setNotificationType(null);
+      setNotification({ message: null, type: null });
     }, 3000);
   };
 
@@ -41,8 +37,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      {notificationMessage && (
-        <Notification message={notificationMessage} type={notificationType} />
+      {notification.message && (
+        <Notification message={notification.message} type={notification.type} />
       )}
       <Filter filterValue={filterValue} setFilterValue={setFilterValue} />
 
