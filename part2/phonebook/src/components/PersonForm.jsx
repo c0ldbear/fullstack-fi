@@ -1,6 +1,14 @@
 import phonebookService from "../services/phonebook";
 
-const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNewNumber }) => {
+const PersonForm = ({
+  persons,
+  setPersons,
+  newName,
+  setNewName,
+  newNumber,
+  setNewNumber,
+  updateNotificationMessage,
+}) => {
   const handlePhonebookNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -26,6 +34,7 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
         setPersons(
           persons.map((person) => (person.id !== foundPerson.id ? person : returnedPerson))
         );
+        updateNotificationMessage(`Updated ${returnedPerson.name}`);
       });
     }
   };
@@ -42,6 +51,7 @@ const PersonForm = ({ persons, setPersons, newName, setNewName, newNumber, setNe
     } else {
       phonebookService.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
+        updateNotificationMessage(`Added ${returnedPerson.name}`);
       });
     }
     setNewName("");
